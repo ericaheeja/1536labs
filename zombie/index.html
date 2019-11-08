@@ -8,10 +8,7 @@
     <body>
         <img src="images/zombie(alive).gif" id="zombie" alt="zombie">
         <img src="images/zombie2(alive).gif" id="zombie2" alt="zombie2">
-        <!-- <img src="images/zombie(die).gif" id="dieZombie" alt="dieZombieImage"> -->
-        <!-- <audio src="src/gunsound.mp3" id="gunsound" type="audio/mpeg"></audio> -->
         <button id="reset">End game</button>
-            <!-- <h2>Score: <span id="scoreID">0</span></h2> -->
         <P>SCORE: </P><p id="scoreID">0</p>
 
         <script>
@@ -25,15 +22,32 @@
             //     img.setAttribute("alt", "zombie")
             // }
             let score = 0;
+            let isZombieClicked = false;
+            let isSecondZombieClicked = false;
             let walkZombie = document.getElementById('zombie');
             let standZombie = document.getElementById('zombie2');
             let endgameButton = document.getElementById('reset');
 
             walkZombie.onclick = function(){
+                if (isZombieClicked){
+                    return
+                }
+                isZombieClicked = true;
                 zombieDied(walkZombie, "zombie(die)");
+                setTimeout(function() {
+                    isZombieClicked = false;
+                }, 1800);
             }
+
             standZombie.onclick = function(){
+                if (isSecondZombieClicked){
+                    return
+                }
+                isSecondZombieClicked = true;
                 zombieDied(standZombie, "zombie2(die)");
+                setTimeout(function(){
+                    isSecondZombieClicked = false;
+                }, 1800);
             }
 
             setInterval(function(){
@@ -59,8 +73,6 @@
                 
                 let my_left = Math.random() * (width - 200);
                 let my_top = Math.random() * (height - 200);
-                console.log("my_left", my_left);
-                console.log("my_top", my_top);
 
                 zombie.style.left = my_left + "px";
                 zombie.style.top = my_top + "px";
@@ -74,9 +86,8 @@
             function zombieDied(zombie, imageSrc) {
                 // Die...
                 zombie.src = "images/" + imageSrc + ".gif";
-                //walkZombie.src = "images/zombie(die).gif"
                 playAudio();
-                countScore();
+                countScore();  
             }
 
             let sound = new Audio('src/gunsound.mp3');
