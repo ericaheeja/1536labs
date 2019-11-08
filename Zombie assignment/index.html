@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zombie hunting</title>
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body>
+        <img src="images/zombie(alive).gif" id="zombie" alt="zombie">
+        <img src="images/zombie2(alive).gif" id="zombie2" alt="zombie2">
+        <!-- <img src="images/zombie(die).gif" id="dieZombie" alt="dieZombieImage"> -->
+        <!-- <audio src="src/gunsound.mp3" id="gunsound" type="audio/mpeg"></audio> -->
+        <button id="reset">End game</button>
+            <!-- <h2>Score: <span id="scoreID">0</span></h2> -->
+        <P>SCORE: </P><p id="scoreID">0</p>
+
+        <script>
+            // reset.onclick = endGame;
+            // let zombieImages = ["zombie(alive)", "zombie2(alive)", "zombie20(alive)"];
+            // for (let i = 0; i < 20; i++){
+            //     let imgId = "img" + (i + 1);
+            //     let img = document.createElement('img')
+            //     img.setAttribute("src", zombieImages[i])
+            //     img.setAttribute("id", imgId);
+            //     img.setAttribute("alt", "zombie")
+            // }
+            let score = 0;
+            let walkZombie = document.getElementById('zombie');
+            let standZombie = document.getElementById('zombie2');
+            let endgameButton = document.getElementById('reset');
+
+            walkZombie.onclick = function(){
+                zombieDied(walkZombie, "zombie(die)");
+            }
+            standZombie.onclick = function(){
+                zombieDied(standZombie, "zombie2(die)");
+            }
+
+            setInterval(function(){
+                moveZombie(walkZombie, "zombie(alive)")
+            }, 2000);
+            
+            setTimeout(function(){
+                setInterval(function(){
+                moveZombie(standZombie, "zombie2(alive)")
+            }, 2000);
+            }, 1000);
+
+            endgameButton.onclick = endGame;            
+
+            function moveZombie(zombie, imageSrc) {
+                let width = window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth;
+
+                let height = window.innerHeight
+                    || document.documentElement.clientHeight
+                    || document.body.clientHeight;
+                
+                let my_left = Math.random() * (width - 200);
+                let my_top = Math.random() * (height - 200);
+                console.log("my_left", my_left);
+                console.log("my_top", my_top);
+
+                zombie.style.left = my_left + "px";
+                zombie.style.top = my_top + "px";
+                zombie.style.margin = "0";
+                // walkZombie.onclick = zombieDied;
+            
+                zombie.src = "images/" + imageSrc + ".gif";
+                // zombie.src = "images/zombie2(alive).gif"
+            }
+
+            function zombieDied(zombie, imageSrc) {
+                // Die...
+                zombie.src = "images/" + imageSrc + ".gif";
+                //walkZombie.src = "images/zombie(die).gif"
+                playAudio();
+                countScore();
+            }
+
+            let sound = new Audio('src/gunsound.mp3');
+
+            function playAudio() {
+                // let sound = document.getElementById("gunsound");
+                sound.play();
+            }
+
+            function endGame() {
+                let width = window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth;
+
+                let height = window.innerHeight
+                    || document.documentElement.clientHeight
+                    || document.body.clientHeight;
+
+                walkZombie.style.left = (width / 2) - (walkZombie.width / 2) + "px";
+                walkZombie.style.top = (height / 2) - (walkZombie.height/ 2) + "px";
+
+                standZombie.style.left = (width / 2) - (standZombie.width / 2) + "px";
+                standZombie.style.top = (height / 2) - (standZombie.height/ 2) + "px";
+                document.getElementById("scoreID").innerHTML = 0;
+                score = 0;
+                //standZombie.display = "none";
+            }
+
+            function countScore() {
+                document.getElementById("scoreID").innerHTML = ++score;
+            }
+       
+        </script>
+    </body>
+</html>
