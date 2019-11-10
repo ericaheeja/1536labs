@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script>
+            // part A
+            function generateButtons() {
+	            let alphabetButtons = prompt("Please enter a number between 0 to 26.");
+	            for (i = 0; i < alphabetButtons; i++) {
+                    let btn = document.createElement("BUTTON");
+                    let btnAlphabets = btn.innerHTML = (i+10).toString(36).toUpperCase();
+                    document.body.appendChild(btn);
+                    btn.onclick = function() {console.log("Button" + btnAlphabets + "was clicked.")}
+	            }
+            }
+            generateButtons();
+
+            // part B
+            let myObj = new Myrecipe("Chicken Cacciatore", 2, ["cinnamon", "lettuce", "onion"]);
+            
+            function Myrecipe(title, serves, ingredients) {
+                this.title = title;
+                this.serves = serves;
+                this.ingredients = ingredients;
+                this.print = function() {
+                document.write('<br/>' + '<br/>' + "Title:" + this.title + '<br/>' + '<br/>');
+                document.write("Serves:" + this.serves + '<br/>' + '<br/>');
+                document.write("Ingredients:" + '<br/>' + '<br/>');
+                    for (i = 0; i < this.ingredients.length; i++) {
+                        document.write(this.ingredients[i] + '<br/>' + '<br/>');}
+                }
+            }
+            myObj.print();
+        </script>
+    </body>
+</html>
