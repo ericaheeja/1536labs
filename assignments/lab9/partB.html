@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <p>How many buttons to create?</p>
+    <input type="text" id="textId">
+    <button type="button" id="buttonId">Go!</button>
+    <p id="valid"></p>
+    <script>
+        let target = 0;
+        let arrayButtons = [];
+        let button = document.getElementById("buttonId");
+        document.getElementById("buttonId").onclick = validateCheck;
+
+        function validateCheck() {
+            let x = 0;
+            let y = 0;
+            let btn;
+            let num = document.getElementById("textId").value;
+            if (parseInt(num) >= 5 && parseInt(num) <= 100) {
+                document.getElementById("valid").innerHTML = "";
+                for(let i = 0; i < num; i++) {
+                    btn = new Button(x, y, i);
+                    arrayButtons.push(btn);
+                }
+            }
+            else {
+                let text = "Invalid input number";
+                document.getElementById("valid").innerHTML = text;
+            }
+            setTimeout(function() {moveButton()}, parseInt(num) * 1000);
+        }
+        //setTimeout(function() {moveButton()}, parseInt(num) * 1000);
+        //setInterval(function() {moveButton()}, 5000);
+        //setTimeout(moveButton, num * 500);
+
+        function Button(x, y, i) {
+            this.btn = document.createElement("button");
+            this.btn.style.top = x + "px";
+            this.btn.style.left = y + "px";
+            this.btn.style.width = "10em";
+            this.btn.style.height = "5em";
+            this.btn.order = i;
+            this.btn.style.background = getRandomColor();
+            //this.btn.style.position = "absolute";
+            this.btn.value = "Hi";
+            this.btn.onclick = killTheBox;
+            document.body.appendChild(this.btn);
+        }
+
+        function killTheBox() {
+            if(this.order == target) {
+                document.getElementById("valid").innerHTML = "Excellent memory!";
+                this.style.display = "none";
+                target++;
+            }
+            else {
+                document.getElementById("valid").innerHTML = "Wrong order!";
+            }
+        }
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function moveButton() {
+                let width = window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth;
+
+                let height = window.innerHeight
+                    || document.documentElement.clientHeight
+                    || document.body.clientHeight;
+                
+                for (let i = 0; i < arrayButtons.length; i++) {
+                    arrayButtons[i].btn.style.left = Math.random() * (width - 200) + "px";
+                    arrayButtons[i].btn.style.top = Math.random() * (height - 200) + "px";
+                    arrayButtons[i].btn.style.position = "absolute";
+                }
+
+
+
+                // walkZombie.onclick = zombieDied;
+                // zombie.src = "images/zombie2(alive).gif"
+            }
+        //document.getElementById("buttonId").onclick = validateCheck;
+    </script>
+</body>
+
+</html>

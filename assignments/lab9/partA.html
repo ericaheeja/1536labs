@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <p>How many buttons to create?</p>
+    <input type="text" id="textId">
+    <button type="button" id="buttonId">Go!</button>
+    <p id="valid"></p>
+    <script>
+        let arrayButtons = [];
+        let button = document.getElementById("buttonId");
+        document.getElementById("buttonId").onclick = validateCheck;
+
+        function validateCheck() {
+            let width = window.innerWidth
+                || document.documentElement.clientWidth
+                || document.body.clientWidth;
+
+            let height = window.innerHeight
+                || document.documentElement.clientHeight
+                || document.body.clientHeight;
+            let btn;
+            let num = document.getElementById("textId").value;
+            if (parseInt(num) >= 5 && parseInt(num) <= 100) {
+                for(let i = 0; i < num; i++) {
+                    btn = new Button();
+                    arrayButtons.push(btn);
+                    arrayButtons[i].btn.style.left = Math.random() * (width - 200) + "px";
+                    arrayButtons[i].btn.style.top = Math.random() * (height - 200) + "px";
+                    arrayButtons[i].btn.style.margin = "0";
+                }
+            }
+            else {
+                let text = "Invalid input number";
+                document.getElementById("valid").innerHTML = text;
+            }
+        }
+
+        setInterval(function() {moveButton()}, 2000);
+
+        function Button() {
+            let width = window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth;
+
+            let height = window.innerHeight
+                    || document.documentElement.clientHeight
+                    || document.body.clientHeight;
+
+            this.btn = document.createElement("button");
+            this.btn.style.top = Math.floor((Math.random() * height) + 1) + "px";
+            this.btn.style.left = Math.floor((Math.random() * width) + 1) + "px";
+            this.btn.style.width = "10em";
+            this.btn.style.height = "5em";
+            this.btn.style.background = getRandomColor();
+            this.btn.style.position = "absolute";
+            this.btn.value = "Hi";
+            document.body.appendChild(this.btn);
+        }
+
+        function getRandomColor() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function moveButton() {
+                let width = window.innerWidth
+                    || document.documentElement.clientWidth
+                    || document.body.clientWidth;
+
+                let height = window.innerHeight
+                    || document.documentElement.clientHeight
+                    || document.body.clientHeight;
+                
+                for (let i = 0; i < arrayButtons.length; i++) {
+                    arrayButtons[i].btn.style.left = Math.random() * (width - 200) + "px";
+                    arrayButtons[i].btn.style.top = Math.random() * (height - 200) + "px";
+                    arrayButtons[i].btn.style.margin = "0";
+                }
+        }
+    </script>
+</body>
+
+</html>
